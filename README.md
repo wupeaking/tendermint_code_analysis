@@ -1,2 +1,29 @@
-# tendermint_code_analysis
-通用区块链平台tendermint源码分析
+## 缘由
+最近工作时间稍微空闲一些, 本来是想写一些关于以太坊的源码分析，一来ethereum的实现过于复杂, 二来网上的资源也是比较丰富的。 有段时间在研究数据如何上链的问题是接触到了一个叫做[bigchaindb][1]的项目。 发现此项目是基于tendermint引擎的。 逐渐接触到了[tendermint][2]。 我想每一个区块链行业的从业者应该都有实现一条公链的想法。 tendermint正好满足了所有的功能。 不用去自己写P2P网络， 不用去实现复杂的共识算法， 不用研究如何对区块打包和存储。 只需要实现几个特定的接口就可以实现一个全新的链。
+
+在基于tendermint实现了一个简(无)单(用)的公链之后， 愈发想研究一下tendermint的技术细节。 所以就有了现在这个源码分析的文章。目前已经通读和理解了大部分的代码， 我是按着模块来阅读的。目前已经看完了P2P, Mempool, Blockchain, State, Consensue。 很多模块的代码注释和文档都比较全面对于阅读源码非常有帮助。当然也有些模块注释很不明确需要自己琢磨许久才能明确其功能。我会逐渐将其落实为文档, 期望能给看到这篇文章的同学提供一些帮助。
+
+## 分析计划
+
+- [x] [P2P模块码分析][3]
+- [ ] Mempool模块源码分析
+- [ ] BlockCain模块源码分析
+- [ ] State模块源码分析
+- [ ] Consensus模块源码分析
+- [ ] Evidence模块源码分析
+- [ ] Crypto加密包功能分析
+- [ ] Tendermint的启动流程分析
+- [ ] 实现Tendermint的ABCI接口实现直接的区块链
+- [ ] 移植以太坊虚拟机到Tendermint
+
+## 进度(10%)
+
+目前自己已经看完的模块有P2P, MemPool, Blockchain, State, Crypto, Node, 实现一个[Demo][4]版本的区块链。 同时完成了移植evm到此项目中。 但是这些工作均没有落实为文档, 因此接下来我会利用空余时间按着上面的计划将已经做的内容落实到文档。 未实现的部分边分析边记录。
+
+    
+
+
+  [1]: https://github.com/bigchaindb/bigchaindb
+  [2]: https://github.com/tendermint/tendermint
+  [3]: p2p源码分析.md
+  [4]: https://github.com/blockchainworkers/conch
