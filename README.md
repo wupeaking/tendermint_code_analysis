@@ -13,7 +13,7 @@
 - [ ] Evidence模块源码分析
 - [ ] Crypto加密包功能分析
 - [ ] Tendermint的启动流程分析
-- [ ] 实现Tendermint的ABCI接口实现直接的区块链
+- [ ] 分析Tendermint的ABCI接口实现自己的区块链
 - [ ] 移植以太坊虚拟机到Tendermint
 
 ## 进度(10%)
