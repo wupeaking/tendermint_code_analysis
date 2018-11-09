@@ -3,6 +3,7 @@
 ![WX20180919-162356.png](img/3D5F11F23D9D284B81181ABEB555081A.png)
 
 然后顺便看一下blockchain模块的文件目录
+
 ![WX20180919-164456.png](img/149BC9339512B878285EF7D9AA4F7207.png)
 
 也就是说blockchain模块我们只需要看pool.go store.go和reactor.go模块 根据名字猜功能,pool 猜想是存储区块的区块池,对多个区块进行管理的？ store.go应该是和数据库进行相关操作的代码。 reactor.go就显而易见就是和Peer进行通信实现Reactor接口的代码了。
@@ -96,14 +97,14 @@ func (pool *BlockPool) makeRequestersRoutine() {
 }
 ```
 接着我们再看几个BlockPool的重要的成员函数 为了避免代码太长隐藏了主线 我只用文字说明函数的功能。
-`removeTimedoutPeers` 遍历容器中的所有peer 如果已经超时了 则移除掉这个peer 同时将绑定这个peer的所有request进行撤销请求。
-`PeekTwoBlocks`从pool.height和pool.height+1对应的request取出块内容
-`PopRequest` 此时删除pool.height对应的request的routine(通过调用request.Stop()),  更新pool.height+1 也就是说这个函数调用的时候 poo.height这个块高度已经被接收到并处理完成了
-`RedoRequest` 撤销某个块高度对应请求的结果 如果这个request已经绑定了某个peer， 通知绑定这个peer下的所有request均进行撤销请求，然后将这个peer从容器中删除。 这个函数是因为区块交易没通过才会被调用的。 后面会分析到。 request的撤销是通过<redoCh>这个通道置位来标识。后面分析request的routine来解释它是怎么和这个通道进行联系的。
-`AddBlock(peerID p2p.ID, block *types.Block, blockSize int)` 添加一个区块到对应的高度的request。同时将对应的peer超时时间置位。当对应高度的request被添加一个块内容, 说明这个请求的块已经拿到, 这个时候将pool.numPending-1 表示这个请求已经不用挂起了, 同时置位<gotBlockCh>这个通道表示request已经接受到块内容。 注意现在我们已经提到request的两个通道了。 显而易见这个函数应该是在BlockChian的Reactor的Receive函数中会直接或者间接调用的。
-`SetPeerHeight(peerID p2p.ID, height int64)`  其实是更新某个peer对应的最高的区块高度。 这个函数的调用应该也是在Rector的Receive中被调用。 设想一下场景， 本节点向连接的所有peer发送了一个块高度请求， 然后有一些peer回应了自己当前所属的最高块高度。这个时候调用这个函数。
-`RemovePeer` 移除维护的peer 在peer通信出错的时候调用 和RedoRequest做的内容差不多 只是这个是通过peerID来移除对应的peer和撤销所有绑定的request。上面那个函数是根据request来移除对应的peer和撤销内容。
-`pickIncrAvailablePeer` 这个函数就是给一个request找一个合适的peer进行绑定。 同时增加这个peer的numpending值(相当于是引用值)。这个引用值啥用呢，当引用值从0到1 则启动定时器。 当引用值每次减少一个(未减少到0)这个重置定时器。 这个定时器的作用就是为了体现peer是否超时。 也即是表示对于peer的一次块请求是否超时了， 如果超时了我们就在前面的`makeRequestersRoutine`函数中看到了就是把这个peer给移除掉（removeTimedoutPeers）。一会我们分析一下这个peer找超时回调都做了啥。
+* `removeTimedoutPeers` 遍历容器中的所有peer 如果已经超时了 则移除掉这个peer 同时将绑定这个peer的所有request进行撤销请求。
+* `PeekTwoBlocks`从pool.height和pool.height+1对应的request取出块内容
+* `PopRequest` 此时删除pool.height对应的request的routine(通过调用request.Stop()),  更新pool.height+1 也就是说这个函数调用的时候 poo.height这个块高度已经被接收到并处理完成了
+* `RedoRequest` 撤销某个块高度对应请求的结果 如果这个request已经绑定了某个peer， 通知绑定这个peer下的所有request均进行撤销请求，然后将这个peer从容器中删除。 这个函数是因为区块交易没通过才会被调用的。 后面会分析到。 request的撤销是通过<redoCh>这个通道置位来标识。后面分析request的routine来解释它是怎么和这个通道进行联系的。
+* `AddBlock(peerID p2p.ID, block *types.Block, blockSize int)` 添加一个区块到对应的高度的request。同时将对应的peer超时时间置位。当对应高度的request被添加一个块内容, 说明这个请求的块已经拿到, 这个时候将pool.numPending-1 表示这个请求已经不用挂起了, 同时置位<gotBlockCh>这个通道表示request已经接受到块内容。 注意现在我们已经提到request的两个通道了。 显而易见这个函数应该是在BlockChian的Reactor的Receive函数中会直接或者间接调用的。
+* `SetPeerHeight(peerID p2p.ID, height int64)`  其实是更新某个peer对应的最高的区块高度。 这个函数的调用应该也是在Rector的Receive中被调用。 设想一下场景， 本节点向连接的所有peer发送了一个块高度请求， 然后有一些peer回应了自己当前所属的最高块高度。这个时候调用这个函数。
+* `RemovePeer` 移除维护的peer 在peer通信出错的时候调用 和RedoRequest做的内容差不多 只是这个是通过peerID来移除对应的peer和撤销所有绑定的request。上面那个函数是根据request来移除对应的peer和撤销内容。
+* `pickIncrAvailablePeer` 这个函数就是给一个request找一个合适的peer进行绑定。 同时增加这个peer的numpending值(相当于是引用值)。这个引用值啥用呢，当引用值从0到1 则启动定时器。 当引用值每次减少一个(未减少到0)这个重置定时器。 这个定时器的作用就是为了体现peer是否超时。 也即是表示对于peer的一次块请求是否超时了， 如果超时了我们就在前面的`makeRequestersRoutine`函数中看到了就是把这个peer给移除掉（removeTimedoutPeers）。一会我们分析一下这个peer找超时回调都做了啥。
 
 我们来看看request的启动进程一直在做什么？
 ```go
