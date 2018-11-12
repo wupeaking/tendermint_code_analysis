@@ -13,7 +13,7 @@
 - [ ] State模块源码分析
 - [ ] Consensus模块源码分析
 - [ ] Evidence模块源码分析
-- [ ] Crypto加密包功能分析
+- [x] [Crypto加密包功能分析][7]
 - [ ] Tendermint的启动流程分析
 - [ ] 分析Tendermint的ABCI接口实现自己的区块链
 - [ ] 移植以太坊虚拟机到Tendermint
@@ -31,3 +31,4 @@
   [4]: https://github.com/blockchainworkers/conch
   [5]: Mempool源码分析.md
   [6]: Blockchain源码分析.md
+  [7]: crypto模块源码分析.md
