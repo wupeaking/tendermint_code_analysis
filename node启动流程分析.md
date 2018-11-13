@@ -1,4 +1,4 @@
-再说启动流程之前我们看看一个github的项目。  [cobra](https://github.com/spf13/cobra) 它是一个是用于创建强大的现代CLI应用程序的库，也是用于生成应用程序和命令文件的程序。 简单点来说就是方面使用者更易创建命令行工具。 
+再说启动流程之前我们看看一个github的项目。  [cobra](https://github.com/spf13/cobra) 它是一个是用于创建强大的现代CLI应用程序的库，也是用于生成应用程序和命令文件的程序。 简单点来说就是方便使用者更易创建命令行工具。 
 
 举个静态博客生成器hugo的例子:
 ```shell
@@ -29,7 +29,7 @@ Available Commands:
   version     Print the version number of Hugo
 
 ```
-使用这个包可以方便管理这些子命令。  和这个包类似功能的还有一个叫做[cli](https://github.com/urfave/cli)。 之前我都是用的这个包。 大致流程都是一样的。 我们看一下官方的readme。
+使用这个包可以方便管理这些子命令。  和这个包类似功能的还有一个叫做[cli](https://github.com/urfave/cli)。 之前我都是用的这个包。 大致流程都是一样的。 我们看一下官方的readme给的一个例子。
 
 ```shell
 package main
@@ -182,8 +182,8 @@ func NewNode(config *cfg.Config,
 	metricsProvider MetricsProvider,
 	logger log.Logger) (*Node, error) {
 
-	// 根据配置信息 创建数据库的使用 tendermint已经封装了leveldb(c/go) fsdb remotedb memdb的实现。 
-	// 如果不出意外我们使用的是leveldb。 当然也是可以扩展自己的 只要实现db定义的那几个接口就行。 
+	// 根据配置信息 创建数据库的使用 tendermint已经封装了leveldb(c/go 一个是原生go写的客户端 一个是cgo写的客户端) fsdb remotedb memdb的实现。 
+	// 如果不出意外我们使用的是leveldb。 当然也是可以扩展自己的后端存储 只要实现db定义的那几个接口就行。 
 	// 下面我们直接以leveldb作为数据存储来分析
 	// 此处打开或者创建名称blockstore.db的数据库
 	blockStoreDB, err := dbProvider(&DBContext{"blockstore", config})
