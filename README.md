@@ -14,7 +14,7 @@
 - [ ] Consensus模块源码分析
 - [ ] Evidence模块源码分析
 - [x] [Crypto加密包功能分析][7]
-- [ ] Tendermint的启动流程分析
+- [x] [Tendermint的启动流程分析][8]
 - [ ] 分析Tendermint的ABCI接口实现自己的区块链
 - [ ] 移植以太坊虚拟机到Tendermint
 
@@ -32,3 +32,4 @@
   [5]: Mempool源码分析.md
   [6]: Blockchain源码分析.md
   [7]: crypto模块源码分析.md
+  [8]: node启动流程分析.md
