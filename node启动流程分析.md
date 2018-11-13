@@ -218,7 +218,7 @@ func NewNode(config *cfg.Config,
 	}
 
 
-  // 下面这几行就是创建和我们自己的应用层教会的地方  这里我们准备先不分析 
+  // 下面这几行就是创建和我们自己的应用层交互的地方  这里我们准备先不分析 
   // 留到下一节分析abci接口的时候在追踪这个地方 但是有个地方我们我先说一下就是这个
   // NewHandshaker 这个函数创建handshaker之后 最后会在proxyApp.Start中调用了
   // handshaker.Handshake这个函数  这个函数会重放已经保存的区块内容将Tendermint保存的区块一一调用
@@ -286,7 +286,8 @@ func NewNode(config *cfg.Config,
 	evidenceReactor := evidence.NewEvidenceReactor(evidencePool)
 	evidenceReactor.SetLogger(evidenceLogger)
 
-  // 下面几句是 先创建一个blockExec  对象最重要的就是之前我们在state中说的ApplyBlock 把Tendermint打包的区块提交到我们的应用层 然后更新Tendermint的状态，Mempool等。 具体查看state模块分析
+  // 下面几句是 先创建一个blockExec  这个对象最重要的就是之前我们在state中说的ApplyBlock 
+  // 把Tendermint打包的区块提交到我们的应用层 然后更新Tendermint的状态，Mempool等。 具体查看state模块分析
   // 然后创建了Blockchain的Reactor
 	blockExecLogger := logger.With("module", "state")
 	// make block executor for consensus and blockchain reactors to execute blocks
@@ -342,7 +343,8 @@ func NewNode(config *cfg.Config,
 
 	// 下面是一个索引服务功能  这个是Tendermint提供的一个功能 就是可以对交易进行索引查找 这个功能我没有仔细分析
 	// 个人认为这个功能意义不大 如果我实现了自己的APP 那么我可以在自己的APP层进行定制化的索引。 效果比这个好很多
-	// 而且还不受这个限制。
+    // 而且还不受这个限制。
+    // 如果以后有时间 我会分析一下交易索引服务的原理 
 	var txIndexer txindex.TxIndexer
 	switch config.TxIndex.Indexer {
 	case "kv":
@@ -433,8 +435,7 @@ func (n *Node) OnStart() error {
 	n.addrBook.AddPrivateIDs(cmn.SplitAndTrim(n.config.P2P.PrivatePeerIDs, ",", " "))
 
   // 开启rpc服务 找个时间专门分析一下rpc服务 Tendermint的rpc流程还是比较清晰的 
-  // 不像ethereum中使用了大量的反射包 
-  // 查询一个具体的rpc方法实现非常麻烦
+  // 不像ethereum中使用了大量的反射包 查询一个具体的rpc方法实现非常麻烦
 	if n.config.RPC.ListenAddress != "" {
 		listeners, err := n.startRPC()
 		if err != nil {
