@@ -16,9 +16,9 @@
 - [x] [Crypto加密包功能分析][7]
 - [x] [Tendermint的启动流程分析][8]
 - [ ] 分析Tendermint的ABCI接口实现自己的区块链
-- [ ] 移植以太坊虚拟机到Tendermint
+- [x] [移植以太坊虚拟机到Tendermint][10]
 
-## 进度(60%) 
+## 进度(80%) 
 
 目前自己已经看完的模块有P2P, MemPool, Blockchain, State, Crypto, Node, 实现一个[Demo][4]版本的区块链。 同时完成了移植evm到此项目中。 但是这些工作均没有落实为文档, 因此接下来我会利用空余时间按着上面的计划将已经做的内容落实到文档。 未实现的部分边分析边记录。
 
@@ -34,3 +34,4 @@
   [7]: crypto模块源码分析.md
   [8]: node启动流程分析.md
   [9]: state源码分析.md
+  [10]: ./evm移植/index.md
