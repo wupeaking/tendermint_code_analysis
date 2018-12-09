@@ -23,7 +23,9 @@
 目前自己已经看完的模块有P2P, MemPool, Blockchain, State, Crypto, Node, 实现一个[Demo][4]版本的区块链。 同时完成了移植evm到此项目中。 但是这些工作均没有落实为文档, 因此接下来我会利用空余时间按着上面的计划将已经做的内容落实到文档。 未实现的部分边分析边记录。
 
     
+## 关于
 
+如果有缘人看到这些文章有想法或建议想和我沟通可以email。 <wupeaking@gmail.com>
 
   [1]: https://github.com/bigchaindb/bigchaindb
   [2]: https://github.com/tendermint/tendermint
