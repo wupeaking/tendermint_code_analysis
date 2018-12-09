@@ -1,7 +1,7 @@
 
 ethereum的虚拟机源码所有部分在core/vm下。 去除测试总共有24个源码文件。 整个vm调用的入口在go-ethereum/core/state_transaction.go中。 我们主要是为了分析虚拟机源码，所以关于以太坊是如何进行交易转账忽略过去。
 
-![WechatIMG4.jpeg](../source-code.jpg)
+![WechatIMG4.jpeg](../img/source-code.jpg)
 
 从上面的截图我们可以看出， 当以太坊的交易中to地址为nil时， 意味着部署合约， 那么就会调用evm.Create方法。 
 否则调用了evm.Call方法。 也就是说分析以太坊虚拟机源码时， 只要从这两个函数作为入口即可。
