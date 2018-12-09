@@ -1,7 +1,7 @@
 ### evm概述
 evm的操作码和其他汇编语言的指令码类似。 只是一般的CPU是哈弗架构或者冯诺依曼架构。 evm是基于栈式结构, 大端序的256bit的虚拟机。 每一个字节码是一个字节。也即是说evm的操作码指令集不会超过256个。 [这个网站](https://ethervm.io/)列出了evm的所有操作码，和相关的栈操作。
 我们找出几个操作码来看一下。
-![WechatIMG1.jpeg](quiver-image-url/6268511DF4163948B132D466AC590754.jpg)
+![WechatIMG1.jpeg](../evm-code.jpg)
 
 ADD指令的十六进制数字表示为0x01 需要操作的栈的数量为两个。 最终入栈的数据剩下一个。
 这样看起来好像没什么感觉， 我们来用一个简单的智能合约编译之后分析一下其运行流程。
@@ -45,7 +45,7 @@ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x4 CALLDATASIZE LT PUSH1 0x3F JUMPI PUSH1 0x
 
 当我们部署一个智能合约的时候， 首先是应该对合约进行一系列的初始化 最后写入到以太坊数据库的智能合约代码是runtime之后的内容。
 为了验证我们分析的正确性， 我们把直接分析的runtime之后的代码和remix返回的runtime的字节码对比发现是一致的。
-![WechatIMG2.jpeg](quiver-image-url/7E6B7942A230527C9379BC87B916F4DB.jpg)
+![WechatIMG2.jpeg](../evm-bytes.jpg)
 也就是当合约部署完成后， 调用智能合约是从runtime之后开始的。
 
 ### 调用智能合约
