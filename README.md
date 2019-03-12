@@ -12,6 +12,7 @@
 - [x] [BlockCain模块源码分析][6]
 - [x] [State模块源码分析][9]
 - [ ] Consensus模块源码分析
+    - [x] [pbft论文简述][121]
 - [ ] Evidence模块源码分析
 - [x] [Crypto加密包功能分析][7]
 - [x] [Tendermint的启动流程分析][8]
@@ -50,3 +51,5 @@
   [103]: ./evm移植/evm之源码分析.md
   [104]: ./evm移植/evm之实战.md
   [105]: ./evm移植/evm之总结.md
+
+  [121]: ./epbft/pbft论文.md
