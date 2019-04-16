@@ -13,6 +13,7 @@
 - [x] [State模块源码分析][9]
 - [ ] Consensus模块源码分析
     - [x] [pbft论文简述][121]
+    - [x] [tendermint共识流程][122]
 - [ ] Evidence模块源码分析
 - [x] [Crypto加密包功能分析][7]
 - [x] [Tendermint的启动流程分析][8]
@@ -53,3 +54,4 @@
   [105]: ./evm移植/evm之总结.md
 
   [121]: ./epbft/pbft论文.md
+  [122]: ./epbft/tendermint拜占庭共识算法.md
