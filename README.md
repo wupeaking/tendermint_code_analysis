@@ -35,6 +35,9 @@
 
 如果有缘人看到这些文章有想法或建议想和我沟通可以email。 <wupeaking@gmail.com>
 
+最近在做一个钱包功能的APP，使用flutter来构建跨平台的APP。 使用golang作为后端语言。 感兴趣的可以查看
+[此项目][12]
+
   [1]: https://github.com/bigchaindb/bigchaindb
   [2]: https://github.com/tendermint/tendermint
   [3]: p2p源码分析.md
@@ -46,6 +49,7 @@
   [9]: state源码分析.md
   [10]: ./evm移植/index.md
   [11]: ./abci接口调用.md
+  [12]: https://github.com/wupeaking/vechain_helper
 
   [101]: ./evm移植/evm之智能合约详解.md
   [102]: ./evm移植/evm之操作码分析.md
